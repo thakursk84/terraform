@@ -11,3 +11,11 @@ resource "aws_instance" "firstserver" {
     Name = "web-${count.index + 1}"
   }
 }
+
+
+/* commands:
+terraform init
+terraform plan
+terraform apply
+terraform destroy
+*/
