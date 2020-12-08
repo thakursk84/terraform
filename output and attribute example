@@ -1,0 +1,31 @@
+provider "aws" {
+  region = "us-east-1"
+}
+
+resource "aws_instance" "usera" {
+  ami           = "ami-04d29b6f966df1537"
+  instance_type = "t2.micro"
+  tags = {
+        Name = "web-1"
+  }
+}
+
+# creation of elastic IP
+resource "aws_eip" "elasticip" {
+ vpc = true
+ }
+
+# association of elastic IP with the created instance 
+resource "aws_eip_association" "aip_assoc" {
+ instance_id = aws_instance.usera.id
+ allocation_id = aws_eip.elasticip.id
+}
+
+# use case of output function to print public and private IP during terraform apply
+output "publicIP" {
+        value = aws_instance.usera.public_ip    /* public_ip is the attribute to print public ip */
+}
+
+output "privateIP" {
+        value = aws_instance.usera.private_ip   /* private ip is the attribute to print private ip */
+}
