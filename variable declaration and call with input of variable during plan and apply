@@ -1,0 +1,50 @@
+# create a tf file and use code part 1
+
+# part 1 start from here (having declaration of region and instance type variable.
+
+variable "region" {
+        description = "AWS region to build resources"
+#       default = "us-east-1"   # defult region commented so it will ask the region name during plan and apply, if uncommented the "us-east-1" will be the default region 
+}
+variable "ami" {
+        type = "map"
+        default = {
+                us-east-1 = "ami-04d29b6f966df1537"
+                us-east-2 = "ami-09558250a3419e7d0"
+        }
+        description = "AMI to use"
+}
+
+variable "ins-type" {
+        type = "map"
+        default = {
+                us-east-1 = "t2.micro"
+                us-east-2 = "t2.small"
+}
+}
+# part 1 ended
+
+# create another tf file with below part 2 code having use case of variable 
+
+# part 2 start from here (having variable call use case)
+
+provider "aws" {
+  region     = "${var.region}"
+}
+
+
+resource "aws_instance" "ourfirst" {
+  ami           = "${lookup(var.ami, var.region)}"
+#here we are calling a function - lookup, the syntax is
+# "${lookup(map, key)}"
+# so it will lookup to var.ami variable based on var.region
+  instance_type = "${lookup(var.ins-type,var.region)}"
+}
+
+resource "aws_eip" "ourfirst" {
+instance = "${aws_instance.ourfirst.id}"
+}
+
+# part 2 ended here
+
+# once both tf files created the go with validate plan and apply...
