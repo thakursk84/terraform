@@ -1,0 +1,7 @@
+Download terraform zip file 
+wget https://releases.hashicorp.com/terraform/0.14.1/terraform_0.14.1_linux_amd64.zip
+
+Unzip the downloaded file to /usr/local/bin/
+unzip terraform_0.14.1_linux_amd64.zip -d /usr/local/bin/
+
+now terrafrom is ready to use 
