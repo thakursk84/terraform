@@ -47,4 +47,4 @@ instance = "${aws_instance.ourfirst.id}"
 
 # part 2 ended here
 
-# once both tf files created the go with validate plan and apply...
+# once both tf files created the go with validate plan and apply... During plan and apply code will ask the region name, input: us-east-1 or us-east-2
