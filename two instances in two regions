@@ -1,0 +1,21 @@
+provider "aws" {
+  region = "us-east-1"
+}
+
+provider "aws" {
+ region = "us-east-2"
+ alias = "new"
+}
+
+#code writted by usera
+resource "aws_instance" "usera" {
+  ami           = "ami-04d29b6f966df1537"
+  instance_type = "t2.micro"
+}
+
+#code written by userb
+resource "aws_instance" "userb" {
+  ami           = "ami-09558250a3419e7d0"
+  instance_type = "t2.micro"
+  provider = aws.new
+}
