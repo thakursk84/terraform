@@ -1,0 +1,34 @@
+/* create a file declaring region */
+
+provider "aws" {
+region = "us-east-1"
+}
+
+
+
+/* create another file having below code explaining the dynamic block */
+
+variable "sg_port" {
+  type        = list(number)
+  description = "list of ingress ports"
+  default     = [8200, 8201, 8300, 9200]
+}
+
+resource "aws_security_group" "dynamicsg" {
+  name        = "dynamicsg"
+  description = "ingress for vault"
+
+  dynamic "ingress" {
+    for_each = var.sg_port
+    content {
+      from_port   = ingress.value
+      to_port     = ingress.value
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+  }
+}
+
+
+
+# it will generate code for 4 ports which  are there in default under variable sg_port
